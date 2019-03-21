@@ -2,8 +2,7 @@ module Data.Colorites
 
 open Data.Shades
 
-type Omega3Model = Omega3 of Picture
+type Fish3Model = Fish3 of Picture
 
-type Colorite = 
-    | Omega3Model of Omega3Model
-
+type Colorite =
+    | Fish3Model of Fish3Model

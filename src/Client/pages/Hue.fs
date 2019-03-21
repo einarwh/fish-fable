@@ -9,10 +9,10 @@ open Data.Styling
 open Data.Colorites
 open Rendering.Reform
 
-let init() : Omega3Model = 
-  createLensPicture fishShapes |> Omega3
-  
-let transform (Omega3 p) : ColorPictureModel = 
+let init() : Fish3Model =
+  createLensPicture fishShapes |> Fish3
+
+let transform (Fish3 p) : ColorPictureModel =
   let bounds = (500, 250)
   let box = { a = { x = 200.; y = 50. }
               b = { x = 150.; y = 0. }

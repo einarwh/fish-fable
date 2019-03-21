@@ -26,56 +26,56 @@ open Pages.Hue
 open Fulma
 open Fable.Import
 
-type Data = 
-  | Nothing 
+type Data =
+  | Nothing
   | DataModel of DataModel
   | Colorite of Colorite
 
-type Model = 
-    { Page : Page 
-      Next : Page option 
+type Model =
+    { Page : Page
+      Next : Page option
       Prev : Page option
       Data : Data }
-      
-let handleNotFound (model : Model) = 
+
+let handleNotFound (model : Model) =
     Browser.console.error("Error parsing url: " + Browser.window.location.href)
     (model, Cmd.none)
 
-let toModel page = 
-    match page with 
-    | Page.Home -> 
-        { Page = page 
-          Prev = None 
-          Next = Some Page.Henderson 
-          Data = Nothing }
-    | Page.Henderson -> 
-        { Page = page 
-          Prev = Some Page.Home 
-          Next = Some Page.Keynote 
-          Data = Nothing }
-    | Page.Keynote ->
+let toModel page =
+    match page with
+    | Page.Home ->
         { Page = page
-          Prev = Some Page.Henderson
-          Next = Some Page.Sicp 
+          Prev = None
+          Next = Some Page.Henderson
           Data = Nothing }
-    | Page.Sicp ->
+    | Page.Henderson ->
         { Page = page
-          Prev = Some Page.Keynote
-          Next = Some Page.Safe 
+          Prev = Some Page.Home
+          Next = Some Page.Start
           Data = Nothing }
-    | Page.Safe ->
-        { Page = page
-          Prev = Some Page.Sicp
-          Next = Some Page.Abstraction
-          Data = Nothing }
-    | Page.Abstraction  ->
-        { Page = page
-          Prev = Some Page.Safe
-          Next = Some Page.Start 
-          Data = Nothing }
+    // | Page.Keynote ->
+    //     { Page = page
+    //       Prev = Some Page.Henderson
+    //       Next = Some Page.Sicp
+    //       Data = Nothing }
+    // | Page.Sicp ->
+    //     { Page = page
+    //       Prev = Some Page.Keynote
+    //       Next = Some Page.Safe
+    //       Data = Nothing }
+    // | Page.Safe ->
+    //     { Page = page
+    //       Prev = Some Page.Sicp
+    //       Next = Some Page.Abstraction
+    //       Data = Nothing }
+    // | Page.Abstraction  ->
+    //     { Page = page
+    //       Prev = Some Page.Safe
+    //       Next = Some Page.Start
+    //       Data = Nothing }
     | Page.Start ->
         { Page = page
-          Prev = Some Page.Abstraction
+          Prev = Some Page.Henderson
           Next = Some Page.Turn
           Data = Start.init() |> BasicModel |> DataModel }
     | Page.Turn ->
@@ -147,20 +147,25 @@ let toModel page =
         { Page = page
           Prev = Some Page.Limit
           Next = Some Page.Xlimit
-          Data = Hue.init() |> Omega3Model |> Colorite }
+          Data = Hue.init() |> Fish3Model |> Colorite }
+    | Page.Xlimit ->
+        { Page = page
+          Prev = Some Page.Hue
+          Next = None
+          Data = Xlimit.init() |> Fish3Model |> Colorite }
     | _ ->
         { Page = page
-          Prev = None 
-          Next = None 
+          Prev = None
+          Next = None
           Data = Nothing }
 
-let updateModel (page : Page) (model : Model) = 
+let updateModel (page : Page) (model : Model) =
     toModel page
 
-let urlUpdate (result : Page option) (model : Model) = 
-    match result with 
-    | None -> handleNotFound model 
-    | Some page -> 
+let urlUpdate (result : Page option) (model : Model) =
+    match result with
+    | None -> handleNotFound model
+    | Some page ->
       updateModel page model, Cmd.none
 
 type Msg =
@@ -178,7 +183,7 @@ let update (msg : Msg) (currentModel : Model) : Model * Cmd<Msg> =
     currentModel, Cmd.none
 
 let viewLink page description =
-    a [ Style [] 
+    a [ Style []
         Href (Pages.toHash page) ]
       [ str description ]
 
@@ -233,8 +238,8 @@ let viewPage model dispatch =
           img [ Src "images/safe-logo.png" ] ]
 
     | Page.Start ->
-        match model.Data with 
-        | DataModel (BasicModel data) -> 
+        match model.Data with
+        | DataModel (BasicModel data) ->
             [ heading "picture"
               subheading "type Picture = Box -> Rendering"
               spacing
@@ -242,17 +247,17 @@ let viewPage model dispatch =
         | _ -> matchfail "start"
 
     | Page.Turn ->
-        match model.Data with 
-        | DataModel (BasicModel data) -> 
+        match model.Data with
+        | DataModel (BasicModel data) ->
             [ heading "turn"
               subheading "(a’, b’, c’) = (a + b, c, -b)"
-              spacing             
+              spacing
               data |> Turn.transform |> Rendering.Transforms.view ]
         | _ -> matchfail "turn"
 
     | Page.Flip ->
-        match model.Data with 
-        | DataModel (BasicModel data) -> 
+        match model.Data with
+        | DataModel (BasicModel data) ->
             [ heading "flip"
               subheading "(a’, b’, c’) = (a + b, -b, c)"
               spacing
@@ -260,8 +265,8 @@ let viewPage model dispatch =
         | _ -> matchfail "flip"
 
     | Page.Toss ->
-        match model.Data with 
-        | DataModel (BasicModel data) -> 
+        match model.Data with
+        | DataModel (BasicModel data) ->
             [ heading "toss"
               subheading "(a’, b’, c’) = (a + (b + c) / 2, (b + c) / 2, (c − b) / 2)"
               spacing
@@ -271,7 +276,7 @@ let viewPage model dispatch =
     | Page.Above ->
         match model.Data with
         | DataModel (BasicModel data) ->
-            [ heading "above" 
+            [ heading "above"
               subheading "put first picture above second picture"
               spacing
               data |> Above.transform |> Rendering.Transforms.view ]
@@ -281,7 +286,7 @@ let viewPage model dispatch =
         match model.Data with
         | DataModel (BasicModel data) ->
             [ heading "beside"
-              subheading "put first picture to the left of second picture" 
+              subheading "put first picture to the left of second picture"
               spacing
               data |> Beside.transform |> Rendering.Transforms.view ]
         | _ -> matchfail "beside"
@@ -289,8 +294,8 @@ let viewPage model dispatch =
     | Page.Quartet ->
         match model.Data with
         | DataModel (BasicModel data) ->
-            [ heading "quartet" 
-              subheading "create a quartet of four pictures" 
+            [ heading "quartet"
+              subheading "create a quartet of four pictures"
               spacing
               data |> Quartet.transform |> Rendering.Transforms.view ]
         | _ -> matchfail "quartet"
@@ -326,7 +331,7 @@ let viewPage model dispatch =
         match model.Data with
         | DataModel (FishModel data) ->
             [ heading "utile"
-              subheading "create the u-tile in square limit" 
+              subheading "create the u-tile in square limit"
               spacing
               data |> Utile.transform |> Rendering.Transforms.view ]
         | _ -> matchfail "utile"
@@ -351,32 +356,75 @@ let viewPage model dispatch =
         match model.Data with
         | DataModel (FishModel data) ->
             [ heading "square limit"
-              subheading "Henderson's replica of square limit" 
+              subheading "Henderson's replica of square limit"
               data |> Limit.transform |> Rendering.Transforms.view ]
         | _ -> matchfail "square limit"
 
     | Page.Hue ->
         match model.Data with
-        | Colorite (Omega3Model data) ->
+        | Colorite (Fish3Model data) ->
             [ heading "hue"
               spacing
               data |> Hue.transform |> Rendering.Reform.view ]
         | _ -> matchfail "hue"
 
+    | Page.Xttile ->
+        match model.Data with
+        | Colorite (Fish3Model data) ->
+            [ heading "ttile"
+              subheading "create the t-tile in square limit"
+              spacing
+              data |> Xttile.transform |> Rendering.Reform.view ]
+        | _ -> matchfail "xttile"
+
+    | Page.Xutile ->
+        match model.Data with
+        | Colorite (Fish3Model data) ->
+            [ heading "utile"
+              subheading "create the u-tile in square limit"
+              spacing
+              data |> Xutile.transform |> Rendering.Reform.view ]
+        | _ -> matchfail "xutile"
+
+    | Page.Xside ->
+        match model.Data with
+        | Colorite (Fish3Model data) ->
+            [ heading "side"
+              spacing
+              data |> Xside.transform |> Rendering.Reform.view ]
+        | _ -> matchfail "xside"
+
+    | Page.Xcorner ->
+        match model.Data with
+        | Colorite (Fish3Model data) ->
+            [ heading "corner"
+              spacing
+              data |> Xcorner.transform |> Rendering.Reform.view ]
+        | _ -> matchfail "xcorner"
+
+    | Page.Xlimit ->
+        match model.Data with
+        | Colorite (Fish3Model data) ->
+            [ heading "square limit"
+              subheading "Tricolor replica of square limit"
+              spacing
+              data |> Xlimit.transform |> Rendering.Reform.view ]
+        | _ -> matchfail "xlimit"
+
     | _ -> matchfail "what page is this?"
 
 let view (model : Model) (dispatch : Msg -> unit) =
-    let next =  
+    let next =
         let link = match model.Next with | Some pg -> viewLink pg "=>" | None -> str ""
         span [ Style [ Float "right"] ] [ link ]
-    let prev =  
+    let prev =
         let link = match model.Prev with | Some pg -> viewLink pg "<=" | None -> str ""
         span [ Style [ Float "left"] ] [ link ]
     div []
-        [ div [ Style [ BackgroundColor "black"; Color "white"; Padding "4px" ] ] 
+        [ div [ Style [ BackgroundColor "black"; Color "white"; Padding "4px" ] ]
               [ span [ Style [ Float "right"] ] [ str "@einarwh" ]
                 span [] [ str "A Fable about Fish" ] ]
-          div [ centerStyle "column" ] 
+          div [ centerStyle "column" ]
               (viewPage model dispatch)
           div [ Style [ BackgroundColor "black"; Color "white"; Padding "4px"; Position "fixed"; Bottom "0px"; ZIndex 100.; Width "100%" ] ]
               [ next; prev ] ]
