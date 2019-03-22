@@ -102,7 +102,7 @@ let createMarker markerId color =
               SVGAttr.Fill color ]
             [] ]
 
-let acolor = "#88499c"
+let acolor = "#B22327"
 let bcolor = "#2381bf"
 let ccolor = "#27b15b"
 
