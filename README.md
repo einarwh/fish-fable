@@ -5,7 +5,7 @@ This is a set of slides used for telling A Fable about Fish. It is an implementa
 ## Start the presentation
 
 ```bash
-fake build -t Run
+fake build -t run
 ```
 
 ## Sources
