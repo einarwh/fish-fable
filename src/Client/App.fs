@@ -12,7 +12,7 @@ open Thoth.Json
 open Rendering.Transforms
 open Data.Models
 open Data.Colorites
-open Pages
+open Toc
 open Pages.Start
 open Pages.Turn
 open Pages.Flip
