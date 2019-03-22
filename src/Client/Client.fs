@@ -22,6 +22,7 @@ open Pages.Beside
 open Pages.Quartet
 open Pages.Nonet
 open Pages.Hue
+open Pages.Xlimit
 
 open Fulma
 open Fable.Import
