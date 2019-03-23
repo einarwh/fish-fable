@@ -8,13 +8,13 @@ open Data.Pictures
 open Data.Models
 open Rendering.Transforms
 
-let init() : NonetModel = 
+let init() : NonetModel =
   let p = createPicture
-  { 
+  {
     nw = p hLetter
     nm = p eLetter
     ne = p nLetter
-    mw = p dLetter 
+    mw = p dLetter
     mm = p eLetter
     me = p rLetter
     sw = p sLetter
@@ -22,12 +22,12 @@ let init() : NonetModel =
     se = p nLetter
   }
 
-let transform { nw = nw; nm = nm; ne = ne; 
-                mw = mw; mm = mm; me = me; 
+let transform { nw = nw; nm = nm; ne = ne;
+                mw = mw; mm = mm; me = me;
                 sw = sw; sm = sm; se = se } : PictureModel =
   let bounds = (400, 400)
   let box = { a = { x = 40.; y = 60. }
               b = { x = 320.; y = 0. }
               c = { x = 0.; y = 320. } }
-  let shapes' = box |> blank
-  (bounds, [], shapes')
+  let shapes = box |> blank
+  (bounds, [], shapes)
