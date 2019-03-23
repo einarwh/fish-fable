@@ -38,7 +38,7 @@
     <Compile Include="pages/Xside.fs" />
     <Compile Include="pages/Xcorner.fs" />
     <Compile Include="pages/Xlimit.fs" />
-    <Compile Include="Pages.fs" />
+    <Compile Include="Toc.fs" />
     <Compile Include="Client.fs" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />

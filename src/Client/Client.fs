@@ -12,7 +12,7 @@ open Thoth.Json
 open Rendering.Transforms
 open Data.Models
 open Data.Colorites
-open Pages
+open Toc
 open Pages.Start
 open Pages.Turn
 open Pages.Flip
@@ -78,82 +78,82 @@ let toModel page =
         { Page = page
           Prev = Some Page.Henderson
           Next = Some Page.Turn
-          Data = Start.init() |> BasicModel |> DataModel }
+          Data = Pages.Start.init() |> BasicModel |> DataModel }
     | Page.Turn ->
         { Page = page
           Prev = Some Page.Start
           Next = Some Page.Flip
-          Data = Turn.init() |> BasicModel |> DataModel }
+          Data = Pages.Turn.init() |> BasicModel |> DataModel }
     | Page.Flip ->
         { Page = page
           Prev = Some Page.Turn
           Next = Some Page.Toss
-          Data = Flip.init() |> BasicModel |> DataModel }
+          Data = Pages.Flip.init() |> BasicModel |> DataModel }
     | Page.Toss ->
         { Page = page
           Prev = Some Page.Flip
           Next = Some Page.Above
-          Data = Toss.init() |> BasicModel |> DataModel }
+          Data = Pages.Toss.init() |> BasicModel |> DataModel }
     | Page.Above ->
         { Page = page
           Prev = Some Page.Toss
           Next = Some Page.Beside
-          Data = Above.init() |> BasicModel |> DataModel }
+          Data = Pages.Above.init() |> BasicModel |> DataModel }
     | Page.Beside ->
         { Page = page
           Prev = Some Page.Above
           Next = Some Page.Quartet
-          Data = Beside.init() |> BasicModel |> DataModel }
+          Data = Pages.Beside.init() |> BasicModel |> DataModel }
     | Page.Quartet ->
         { Page = page
           Prev = Some Page.Beside
           Next = Some Page.Nonet
-          Data = Quartet.init() |> BasicModel |> DataModel }
+          Data = Pages.Quartet.init() |> BasicModel |> DataModel }
     | Page.Nonet ->
         { Page = page
           Prev = Some Page.Quartet
           Next = Some Page.Over
-          Data = Nonet.init() |> NonetModel |> DataModel }
+          Data = Pages.Nonet.init() |> NonetModel |> DataModel }
     | Page.Over ->
         { Page = page
           Prev = Some Page.Nonet
           Next = Some Page.Ttile
-          Data = Over.init() |> FishModel |> DataModel }
+          Data = Pages.Over.init() |> FishModel |> DataModel }
     | Page.Ttile ->
         { Page = page
           Prev = Some Page.Over
           Next = Some Page.Utile
-          Data = Ttile.init() |> FishModel |> DataModel }
+          Data = Pages.Ttile.init() |> FishModel |> DataModel }
     | Page.Utile ->
         { Page = page
           Prev = Some Page.Ttile
           Next = Some Page.Side
-          Data = Utile.init() |> FishModel |> DataModel }
+          Data = Pages.Utile.init() |> FishModel |> DataModel }
     | Page.Side ->
         { Page = page
           Prev = Some Page.Utile
           Next = Some Page.Corner
-          Data = Side.init() |> FishModel |> DataModel }
+          Data = Pages.Side.init() |> FishModel |> DataModel }
     | Page.Corner ->
         { Page = page
           Prev = Some Page.Side
           Next = Some Page.Limit
-          Data = Corner.init() |> FishModel |> DataModel }
+          Data = Pages.Corner.init() |> FishModel |> DataModel }
     | Page.Limit ->
         { Page = page
           Prev = Some Page.Corner
           Next = Some Page.Hue
-          Data = Limit.init() |> FishModel |> DataModel }
+          Data = Pages.Limit.init() |> FishModel |> DataModel }
     | Page.Hue ->
         { Page = page
           Prev = Some Page.Limit
           Next = Some Page.Xlimit
-          Data = Hue.init() |> Fish3Model |> Colorite }
+          Data = Pages.Hue.init() |> Fish3Model |> Colorite }
     | Page.Xlimit ->
         { Page = page
           Prev = Some Page.Hue
           Next = None
-          Data = Xlimit.init() |> Fish3Model |> Colorite }
+          Data = Pages.Xlimit.init() |> Fish3Model |> Colorite }
     | _ ->
         { Page = page
           Prev = None
@@ -185,7 +185,7 @@ let update (msg : Msg) (currentModel : Model) : Model * Cmd<Msg> =
 
 let viewLink page description =
     a [ Style []
-        Href (Pages.toHash page) ]
+        Href (Toc.toHash page) ]
       [ str description ]
 
 
@@ -244,7 +244,7 @@ let viewPage model dispatch =
             [ heading "picture"
               subheading "type Picture = Box -> Rendering"
               spacing
-              data |> Start.transform |> Rendering.Transforms.view ]
+              data |> Pages.Start.transform |> Rendering.Transforms.view ]
         | _ -> matchfail "start"
 
     | Page.Turn ->
@@ -253,7 +253,7 @@ let viewPage model dispatch =
             [ heading "turn"
               subheading "(a’, b’, c’) = (a + b, c, -b)"
               spacing
-              data |> Turn.transform |> Rendering.Transforms.view ]
+              data |> Pages.Turn.transform |> Rendering.Transforms.view ]
         | _ -> matchfail "turn"
 
     | Page.Flip ->
@@ -262,7 +262,7 @@ let viewPage model dispatch =
             [ heading "flip"
               subheading "(a’, b’, c’) = (a + b, -b, c)"
               spacing
-              data |> Flip.transform |> Rendering.Transforms.view ]
+              data |> Pages.Flip.transform |> Rendering.Transforms.view ]
         | _ -> matchfail "flip"
 
     | Page.Toss ->
@@ -271,7 +271,7 @@ let viewPage model dispatch =
             [ heading "toss"
               subheading "(a’, b’, c’) = (a + (b + c) / 2, (b + c) / 2, (c − b) / 2)"
               spacing
-              data |> Toss.transform |> Rendering.Transforms.view ]
+              data |> Pages.Toss.transform |> Rendering.Transforms.view ]
         | _ -> matchfail "toss"
 
     | Page.Above ->
@@ -280,7 +280,7 @@ let viewPage model dispatch =
             [ heading "above"
               subheading "put first picture above second picture"
               spacing
-              data |> Above.transform |> Rendering.Transforms.view ]
+              data |> Pages.Above.transform |> Rendering.Transforms.view ]
         | _ -> matchfail "above"
 
     | Page.Beside ->
@@ -289,7 +289,7 @@ let viewPage model dispatch =
             [ heading "beside"
               subheading "put first picture to the left of second picture"
               spacing
-              data |> Beside.transform |> Rendering.Transforms.view ]
+              data |> Pages.Beside.transform |> Rendering.Transforms.view ]
         | _ -> matchfail "beside"
 
     | Page.Quartet ->
@@ -298,7 +298,7 @@ let viewPage model dispatch =
             [ heading "quartet"
               subheading "create a quartet of four pictures"
               spacing
-              data |> Quartet.transform |> Rendering.Transforms.view ]
+              data |> Pages.Quartet.transform |> Rendering.Transforms.view ]
         | _ -> matchfail "quartet"
 
     | Page.Nonet ->
@@ -307,7 +307,7 @@ let viewPage model dispatch =
             [ heading "nonet"
               subheading "create a nonet of nine pictures"
               spacing
-              data |> Nonet.transform |> Rendering.Transforms.view ]
+              data |> Pages.Nonet.transform |> Rendering.Transforms.view ]
         | _ -> matchfail "nonet"
 
     | Page.Over ->
@@ -316,7 +316,7 @@ let viewPage model dispatch =
             [ heading "over"
               subheading "overlay two pictures inside the same box"
               spacing
-              data |> Over.transform |> Rendering.Transforms.view ]
+              data |> Pages.Over.transform |> Rendering.Transforms.view ]
         | _ -> matchfail "over"
 
     | Page.Ttile ->
@@ -325,7 +325,7 @@ let viewPage model dispatch =
             [ heading "ttile"
               subheading "create the t-tile in square limit"
               spacing
-              data |> Ttile.transform |> Rendering.Transforms.view ]
+              data |> Pages.Ttile.transform |> Rendering.Transforms.view ]
         | _ -> matchfail "ttile"
 
     | Page.Utile ->
@@ -334,7 +334,7 @@ let viewPage model dispatch =
             [ heading "utile"
               subheading "create the u-tile in square limit"
               spacing
-              data |> Utile.transform |> Rendering.Transforms.view ]
+              data |> Pages.Utile.transform |> Rendering.Transforms.view ]
         | _ -> matchfail "utile"
 
     | Page.Side ->
@@ -342,7 +342,7 @@ let viewPage model dispatch =
         | DataModel (FishModel data) ->
             [ heading "side"
               spacing
-              data |> Side.transform |> Rendering.Transforms.view ]
+              data |> Pages.Side.transform |> Rendering.Transforms.view ]
         | _ -> matchfail "side"
 
     | Page.Corner ->
@@ -350,7 +350,7 @@ let viewPage model dispatch =
         | DataModel (FishModel data) ->
             [ heading "corner"
               spacing
-              data |> Corner.transform |> Rendering.Transforms.view ]
+              data |> Pages.Corner.transform |> Rendering.Transforms.view ]
         | _ -> matchfail "corner"
 
     | Page.Limit ->
@@ -358,7 +358,7 @@ let viewPage model dispatch =
         | DataModel (FishModel data) ->
             [ heading "square limit"
               subheading "Henderson's replica of square limit"
-              data |> Limit.transform |> Rendering.Transforms.view ]
+              data |> Pages.Limit.transform |> Rendering.Transforms.view ]
         | _ -> matchfail "square limit"
 
     | Page.Hue ->
@@ -366,7 +366,7 @@ let viewPage model dispatch =
         | Colorite (Fish3Model data) ->
             [ heading "hue"
               spacing
-              data |> Hue.transform |> Rendering.Reform.view ]
+              data |> Pages.Hue.transform |> Rendering.Reform.view ]
         | _ -> matchfail "hue"
 
     | Page.Xttile ->
@@ -375,7 +375,7 @@ let viewPage model dispatch =
             [ heading "ttile"
               subheading "create the t-tile in square limit"
               spacing
-              data |> Xttile.transform |> Rendering.Reform.view ]
+              data |> Pages.Xttile.transform |> Rendering.Reform.view ]
         | _ -> matchfail "xttile"
 
     | Page.Xutile ->
@@ -384,7 +384,7 @@ let viewPage model dispatch =
             [ heading "utile"
               subheading "create the u-tile in square limit"
               spacing
-              data |> Xutile.transform |> Rendering.Reform.view ]
+              data |> Pages.Xutile.transform |> Rendering.Reform.view ]
         | _ -> matchfail "xutile"
 
     | Page.Xside ->
@@ -392,7 +392,7 @@ let viewPage model dispatch =
         | Colorite (Fish3Model data) ->
             [ heading "side"
               spacing
-              data |> Xside.transform |> Rendering.Reform.view ]
+              data |> Pages.Xside.transform |> Rendering.Reform.view ]
         | _ -> matchfail "xside"
 
     | Page.Xcorner ->
@@ -400,7 +400,7 @@ let viewPage model dispatch =
         | Colorite (Fish3Model data) ->
             [ heading "corner"
               spacing
-              data |> Xcorner.transform |> Rendering.Reform.view ]
+              data |> Pages.Xcorner.transform |> Rendering.Reform.view ]
         | _ -> matchfail "xcorner"
 
     | Page.Xlimit ->
@@ -409,7 +409,7 @@ let viewPage model dispatch =
             [ heading "square limit"
               subheading "Tricolor replica of square limit"
               spacing
-              data |> Xlimit.transform |> Rendering.Reform.view ]
+              data |> Pages.Xlimit.transform |> Rendering.Reform.view ]
         | _ -> matchfail "xlimit"
 
     | _ -> matchfail "what page is this?"
@@ -436,7 +436,7 @@ open Elmish.HMR
 #endif
 
 Program.mkProgram init update view
-|> Program.toNavigable Pages.urlParser urlUpdate
+|> Program.toNavigable Toc.urlParser urlUpdate
 #if DEBUG
 |> Program.withConsoleTrace
 |> Program.withHMR
