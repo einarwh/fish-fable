@@ -13,8 +13,8 @@ type Bounds = (int * int)
 
 type PictureModel = (Bounds * Box list * (Shape * Style) list)
 
-let useArrows = false
-let dottedLineColor = "red"
+let useArrows = true
+let dottedLineColor = "grey"
 
 let mapper { a = a; b = b; c = c }
            { x = x; y = y } =
