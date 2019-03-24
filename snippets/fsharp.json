@@ -1,0 +1,594 @@
+{
+	"turnBox (outline)": {
+		"prefix": "turnBox-outline",
+		"body": [
+			"// turnBox : Box -> Box",
+			"let turnBox { a = a; b = b; c = c } =",
+			"  { a = a",
+			"    b = b",
+			"    c = c }"
+		],
+		"description": "Insert turnBox function outline"
+	},
+
+	"turnBox (solution)": {
+		"prefix": "cheat-turnBox",
+		"body": [
+			"// turnBox : Box -> Box",
+			"let turnBox { a = a; b = b; c = c } =",
+			"  { a = a + b",
+			"    b = c",
+			"    c = -b }"
+		],
+		"description": "Insert turnBox function solution"
+	},
+
+	"flipBox (outline)": {
+		"prefix": "flipBox-outline",
+		"body": [
+			"// flipBox : Box -> Box",
+			"let flipBox { a = a; b = b; c = c } =",
+			"  { a = a",
+			"    b = b",
+			"    c = c }"
+		],
+		"description": "Insert flipBox function outline"
+	},
+
+	"flipBox (solution)": {
+		"prefix": "cheat-flipBox",
+		"body": [
+			"// flipBox : Box -> Box",
+			"let flipBox { a = a; b = b; c = c } =",
+			"  { a = a + b",
+			"    b = -b",
+			"    c = c }"
+		],
+		"description": "Insert flipBox function solution"
+	},
+
+	"tossBox (outline)": {
+		"prefix": "tossBox-outline",
+		"body": [
+			"// tossBox : Box -> Box",
+			"let tossBox { a = a; b = b; c = c } =",
+			"  { a = a",
+			"    b = b",
+			"    c = c }"
+		],
+		"description": "Insert tossBox function outline"
+	},
+
+	"tossBox (solution)": {
+		"prefix": "cheat-tossBox",
+		"body": [
+			"// tossBox : Box -> Box",
+			"let tossBox { a = a; b = b; c = c } =",
+			"  { a = a + ((b + c) / 2.)",
+			"    b = (b + c) / 2.",
+			"    c = (c - b) / 2. }"
+		],
+		"description": "Insert tossBox function solution"
+	},
+
+	"moveVertically (outline)": {
+		"prefix": "moveVertically-outline",
+		"body": [
+			"// moveVertically : float -> Box -> Box",
+			"let moveVertically f { a = a; b = b; c = c } =",
+			"  { a = a",
+			"    b = b",
+			"    c = c }"
+		],
+		"description": "Insert moveVertically function outline"
+	},
+
+	"moveVertically (solution)": {
+		"prefix": "cheat-moveVertically",
+		"body": [
+			"// moveVertically : float -> Box -> Box",
+			"let moveVertically f { a = a; b = b; c = c } =",
+			"  { a = a + f * c",
+			"    b = b",
+			"    c = c }"
+		],
+		"description": "Insert moveVertically function solution"
+	},
+
+	"scaleVertically (outline)": {
+		"prefix": "scaleVertically-outline",
+		"body": [
+			"// scaleVertically : float -> Box -> Box",
+			"let scaleVertically f { a = a; b = b; c = c } =",
+			"  { a = a",
+			"    b = b",
+			"    c = c }"
+		],
+		"description": "Insert scaleVertically function outline"
+	},
+
+	"scaleVertically (solution)": {
+		"prefix": "cheat-scaleVertically",
+		"body": [
+			"// scaleVertically : float -> Box -> Box",
+			"let scaleVertically f { a = a; b = b; c = c } =",
+			"  { a = a",
+			"    b = b",
+			"    c = f * c }"
+		],
+		"description": "Insert scaleVertically function solution"
+	},
+
+	"splitVertically (outline)": {
+		"prefix": "splitVertically-outline",
+		"body": [
+			"// splitVertically : float -> Box -> (Box * Box)",
+			"let splitVertically f box = (box, box)"
+		],
+		"description": "Insert splitVertically function outline"
+	},
+
+	"splitVertically (solution)": {
+		"prefix": "cheat-splitVertically",
+		"body": [
+			"// splitVertically : float -> Box -> (Box * Box)",
+			"let splitVertically f box =",
+			"  let top = box |> moveVertically (1. - f) |> scaleVertically f",
+			"  let bot = box |> scaleVertically (1. - f)",
+			"  (top, bot)"
+		],
+		"description": "Insert splitVertically function solution"
+	},
+
+	"vertically (solution)": {
+		"prefix": "cheat-vertically",
+		"body": [
+			"// moveVertically : float -> Box -> Box",
+			"let moveVertically f { a = a; b = b; c = c } =",
+			"  { a = a + f * c",
+			"    b = b",
+			"    c = c }",
+			"",
+			"// scaleVertically : float -> Box -> Box",
+			"let scaleVertically f { a = a; b = b; c = c } =",
+			"  { a = a",
+			"    b = b",
+			"    c = f * c }",
+			"",
+			"// splitVertically : float -> Box -> (Box * Box)",
+			"let splitVertically f box =",
+			"  let top = box |> moveVertically (1. - f) |> scaleVertically f",
+			"  let bot = box |> scaleVertically (1. - f)",
+			"  (top, bot)"
+		],
+		"description": "Insert splitVertically function solution"
+	},
+
+
+	"moveHorizontally (outline)": {
+		"prefix": "moveHorizontally-outline",
+		"body": [
+			"// moveHorizontally : float -> Box -> Box",
+			"let moveHorizontally f { a = a; b = b; c = c } =",
+			"  { a = a",
+			"    b = b",
+			"    c = c }"
+		],
+		"description": "Insert moveHorizontally function outline"
+	},
+
+	"moveHorizontally (solution)": {
+		"prefix": "cheat-moveHorizontally",
+		"body": [
+			"// moveHorizontally : float -> Box -> Box",
+			"let moveHorizontally f { a = a; b = b; c = c } =",
+			"  { a = a + f * b",
+			"    b = b",
+			"    c = c }"
+		],
+		"description": "Insert moveHorizontally function solution"
+	},
+
+	"scaleHorizontally (outline)": {
+		"prefix": "scaleHorizontally-outline",
+		"body": [
+			"// scaleHorizontally : float -> Box -> Box",
+			"let scaleHorizontally f { a = a; b = b; c = c } =",
+			"  { a = a",
+			"    b = b",
+			"    c = c }"
+		],
+		"description": "Insert scaleHorizontally function outline"
+	},
+
+	"scaleHorizontally (solution)": {
+		"prefix": "cheat-scaleHorizontally",
+		"body": [
+			"// scaleHorizontally : float -> Box -> Box",
+			"let scaleHorizontally f { a = a; b = b; c = c } =",
+			"  { a = a",
+			"    b = f * b",
+			"    c = c }"
+		],
+		"description": "Insert scaleHorizontally function solution"
+	},
+
+	"splitHorizontally (outline)": {
+		"prefix": "splitHorizontally-outline",
+		"body": [
+			"// splitHorizontally : float -> Box -> (Box * Box)",
+			"let splitHorizontally f box = (box, box)"
+		],
+		"description": "Insert splitHorizontally function outline"
+	},
+
+	"splitHorizontally (solution)": {
+		"prefix": "cheat-splitHorizontally",
+		"body": [
+			"// splitHorizontally : float -> Box -> (Box * Box)",
+			"let splitHorizontally f box =",
+			"  let left = box |> scaleHorizontally f",
+			"  let right = box |> moveHorizontally f |> scaleHorizontally (1. - f)",
+			"  (left, right)"
+		],
+		"description": "Insert splitHorizontally function solution"
+	},
+
+	"horizontally (solution)": {
+		"prefix": "cheat-horizontally",
+		"body": [
+			"// moveHorizontally : float -> Box -> Box",
+			"let moveHorizontally f { a = a; b = b; c = c } =",
+			"  { a = a + f * b",
+			"    b = b",
+			"    c = c }",
+			"",
+			"// scaleHorizontally : float -> Box -> Box",
+			"let scaleHorizontally f { a = a; b = b; c = c } =",
+			"  { a = a",
+			"    b = f * b",
+			"    c = c }",
+			"",
+			"// splitHorizontally : float -> Box -> (Box * Box)",
+			"let splitHorizontally f box =",
+			"  let left = box |> scaleHorizontally f",
+			"  let right = box |> moveHorizontally f |> scaleHorizontally (1. - f)",
+			"  (left, right)"
+		],
+		"description": "Insert splitHorizontally function solution"
+	},
+
+	"turn (outline)": {
+		"prefix": "turn-outline",
+		"body": [
+			"// turn : Picture -> Picture",
+			"let turn p = blank"
+		],
+		"description": "Insert turn function outline"
+	},
+
+	"turn (solution)": {
+		"prefix": "cheat-turn",
+		"body": [
+			"// turn : Picture -> Picture",
+			"let turn p = turnBox >> p"
+		],
+		"description": "Insert turn function solution"
+	},
+
+	"flip (outline)": {
+		"prefix": "flip-outline",
+		"body": [
+			"// flip : Picture -> Picture",
+			"let flip p = blank"
+		],
+		"description": "Insert flip function outline"
+	},
+
+	"flip (solution)": {
+		"prefix": "cheat-flip",
+		"body": [
+			"// flip : Picture -> Picture",
+			"let flip p = flipBox >> p"
+		],
+		"description": "Insert flip function solution"
+	},
+
+	"toss (outline)": {
+		"prefix": "toss-outline",
+		"body": [
+			"// toss : Picture -> Picture",
+			"let toss p = blank"
+		],
+		"description": "Insert toss function outline"
+	},
+
+	"toss (solution)": {
+		"prefix": "cheat-toss",
+		"body": [
+			"// toss : Picture -> Picture",
+			"let toss p = tossBox >> p"
+		],
+		"description": "Insert toss function solution"
+	},
+
+	"aboveRatio (outline)": {
+		"prefix": "aboveRatio-outline",
+		"body": [
+			"// aboveRatio : int -> int -> Picture -> Picture -> Picture",
+			"let aboveRatio m n p1 p2 : Picture = blank"
+		],
+		"description": "Insert aboveRatio function outline"
+	},
+
+	"aboveRatio (solution)": {
+		"prefix": "cheat-aboveRatio",
+		"body": [
+			"// aboveRatio : int -> int -> Picture -> Picture -> Picture",
+			"let aboveRatio m n p1 p2 : Picture =",
+			"  fun box ->",
+			"    let f = float m / float (m + n)",
+			"    let (b1, b2) = splitVertically f box",
+			"    (p1 b1) @ (p2 b2)"
+		],
+		"description": "Insert aboveRatio function solution"
+	},
+
+	"above (outline)": {
+		"prefix": "above-outline",
+		"body": [
+			"// above : Picture -> Picture -> Picture",
+			"let above p1 p2 = blank"
+		],
+		"description": "Insert above function outline"
+	},
+
+	"above (solution)": {
+		"prefix": "cheat-above",
+		"body": [
+			"// above : Picture -> Picture -> Picture",
+			"let above = aboveRatio 1 1"
+		],
+		"description": "Insert above function solution"
+	},
+
+	"besideRatio (outline)": {
+		"prefix": "besideRatio-outline",
+		"body": [
+			"// besideRatio : Int -> Int -> Picture -> Picture -> Picture",
+			"let besideRatio m n p1 p2 : Picture = blank"
+		],
+		"description": "Insert besideRatio function outline"
+	},
+
+	"besideRatio (solution)": {
+		"prefix": "cheat-besideRatio",
+		"body": [
+			"// besideRatio : Int -> Int -> Picture -> Picture -> Picture",
+			"let besideRatio m n p1 p2 : Picture =",
+			"  fun box ->",
+			"    let f = float m / float (m + n)",
+			"    let (b1, b2) = splitHorizontally f box",
+			"    (p1 b1) @ (p2 b2)"
+		],
+		"description": "Insert besideRatio function solution"
+	},
+
+	"beside (outline)": {
+		"prefix": "beside-outline",
+		"body": [
+			"// beside : Picture -> Picture -> Picture",
+			"let beside p1 p2 = blank"
+		],
+		"description": "Insert beside function outline"
+	},
+
+	"beside (solution)": {
+		"prefix": "cheat-beside",
+		"body": [
+			"// beside : Picture -> Picture -> Picture",
+			"let beside = besideRatio 1 1"
+		],
+		"description": "Insert beside function solution"
+	},
+
+	"quartet (outline)": {
+		"prefix": "quartet-outline",
+		"body": [
+			"// quartet : Picture -> Picture -> Picture -> Picture -> Picture",
+			"let quartet nw ne sw se = blank"
+		],
+		"description": "Insert quartet function outline"
+	},
+
+	"quartet (solution)": {
+		"prefix": "cheat-quartet",
+		"body": [
+			"// quartet : Picture -> Picture -> Picture -> Picture -> Picture",
+			"let quartet nw ne sw se =",
+			"  above (beside nw ne)",
+			"        (beside sw se)"
+		],
+		"description": "Insert quartet function outline"
+	},
+
+	"nonet (outline)": {
+		"prefix": "nonet-outline",
+		"body": [
+			"// nonet : Picture -> Picture -> Picture -> Picture -> Picture -> Picture -> Picture -> Picture -> Picture -> Picture",
+			"let nonet nw nm ne mw mm me sw sm se = blank"
+		],
+		"description": "nonet beside function outline"
+	},
+
+	"nonet (solution)": {
+		"prefix": "cheat-nonet",
+		"body": [
+			"// nonet : Picture -> Picture -> Picture -> Picture -> Picture -> Picture -> Picture -> Picture -> Picture -> Picture",
+			"let nonet nw nm ne mw mm me sw sm se =",
+			"  let row w m e = besideRatio 1 2 w (beside m e)",
+			"  let col n m s = aboveRatio 1 2 n (above m s)",
+			"  col (row nw nm ne)",
+			"      (row mw mm me)",
+			"      (row sw sm se)"
+		],
+		"description": "Insert nonet function outline"
+	},
+
+	"over (outline)": {
+		"prefix": "over-outline",
+		"body": [
+			"// over : Picture -> Picture -> Picture",
+			"let over p1 p2 = blank"
+		],
+		"description": "Insert over function outline"
+	},
+
+	"over (solution)": {
+		"prefix": "cheat-over",
+		"body": [
+			"// over : Picture -> Picture -> Picture",
+			"let over p1 p2 = ",
+			"  fun box -> (p1 box) @ (p2 box)"
+		],
+		"description": "Insert over function solution"
+	},
+
+	"ttile (outline)": {
+		"prefix": "ttile-outline",
+		"body": [
+			"// ttile : Picture -> Picture",
+			"let ttile fish = blank"
+		],
+		"description": "Insert ttile function outline"
+	},
+
+	"ttile (solution)": {
+		"prefix": "cheat-ttile",
+		"body": [
+			"// ttile : Picture -> Picture",
+			"let ttile fish =",
+			"  let fishN = fish |> toss |> flip",
+			"  let fishE = fishN |> turn |> turn |> turn",
+			"  fish |> over fishN |> over fishE"
+		],
+		"description": "Insert ttile function solution"
+	},
+
+	"utile (outline)": {
+		"prefix": "utile-outline",
+		"body": [
+			"// utile : Picture -> Picture",
+			"let utile fish = blank"
+		],
+		"description": "Insert utile function outline"
+	},
+
+	"utile (solution)": {
+		"prefix": "cheat-utile",
+		"body": [
+			"// utile : Picture -> Picture",
+			"let utile fish =",
+			"  let fishN = fish |> toss |> flip",
+			"  let fishW = fishN |> turn",
+			"  let fishS = fishW |> turn",
+			"  let fishE = fishS |> turn",
+			"  fishN |> over fishW |> over fishS |> over fishE"
+		],
+		"description": "Insert utile function solution"
+	},
+
+	"side (outline)": {
+		"prefix": "side-outline",
+		"body": [
+			"// side : int -> Picture -> Picture",
+			"let side n fish = blank"
+		],
+		"description": "Insert side function outline"
+	},
+
+	"side (solution)": {
+		"prefix": "cheat-side",
+		"body": [
+			"// side : int -> Picture -> Picture",
+			"let rec side n fish =",
+			"  if n < 1 then blank",
+			"  else",
+			"    let s = side (n - 1) fish",
+			"    let t = ttile fish",
+			"    quartet s s (turn t) t"
+		],
+		"description": "Insert side function solution"
+	},
+
+	"corner (outline)": {
+		"prefix": "corner-outline",
+		"body": [
+			"// corner : int -> Picture -> Picture",
+			"let corner n fish = blank"
+		],
+		"description": "Insert corner function outline"
+	},
+
+	"corner (solution)": {
+		"prefix": "cheat-corner",
+		"body": [
+			"// corner : int -> Picture -> Picture",
+			"let rec corner n fish =",
+			"  if n < 1 then blank",
+			"  else",
+			"    let c = corner (n - 1) fish",
+			"    let s = side (n - 1) fish",
+			"    quartet c s (turn s) (utile fish)"
+		],
+		"description": "Insert corner function solution"
+	},
+
+	"squareLimit (outline)": {
+		"prefix": "squareLimit-outline",
+		"body": [
+			"// squareLimit : int -> Picture -> Picture",
+			"let squareLimit n fish = blank"
+		],
+		"description": "Insert squareLimit function outline"
+	},
+
+	"squareLimit (solution)": {
+		"prefix": "cheat-squareLimit",
+		"body": [
+			"// squareLimit : int -> Picture -> Picture",
+			"let squareLimit n fish =",
+			"  let mm = utile fish",
+			"  let nw = corner n fish",
+			"  let sw = nw |> turn",
+			"  let se = sw |> turn",
+			"  let ne = se |> turn",
+			"  let nm = side n fish",
+			"  let mw = nm |> turn",
+			"  let sm = mw |> turn",
+			"  let me = sm |> turn",
+			"  nonet nw nm ne mw mm me sw sm se"
+		],
+		"description": "Insert squareLimit function solution"
+	},
+
+	"times (outline)": {
+		"prefix": "times-outline",
+		"body": [
+			"// times : int -> (a -> a) -> (a -> a)",
+			"let times n fn = id"
+		],
+		"description": "Insert times function solution"
+	},
+
+	"times (solution)": {
+		"prefix": "cheat-times",
+		"body": [
+			"// times : int -> (a -> a) -> (a -> a)",
+			"let times n fn =",
+			"  if n < 1 then id",
+			"  else fn >> times (n - 1) fn"
+		],
+		"description": "Insert times function solution"
+	}
+}
