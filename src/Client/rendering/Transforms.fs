@@ -13,6 +13,9 @@ type Bounds = (int * int)
 
 type PictureModel = (Bounds * Box list * (Shape * Style) list)
 
+let useArrows = false
+let dottedLineColor = "red"
+
 let mapper { a = a; b = b; c = c }
            { x = x; y = y } =
    a + b * x + c * y
@@ -61,31 +64,6 @@ let toAxisLine { lineStart = { x = x1; y = y1 }
        X2 x2
        Y2 y2 ] []
 
-(*
-[
-    svg [ SVGAttr.Width "600px"
-          SVGAttr.Height "100px" ]
-        [ defs [ ]
-            [ svgEl "marker" [ SVGAttr.Custom("id", "arrow")
-                               SVGAttr.Custom ("markerWidth", "10")
-                               SVGAttr.Custom ("markerHeight", "10")
-                               SVGAttr.Custom ("refX", "0")
-                               SVGAttr.Custom ("refY", "3")
-                               SVGAttr.Custom ("orient", "auto")
-                               SVGAttr.Custom ("markerUnits", "strokeWidth")
-                               SVGAttr.ViewBox "0 0 20 20" ]
-                [ path [ SVGAttr.D "M0,0 L0,6 L9,3 z"
-                         SVGAttr.Fill "#f00" ]
-                    [ ] ] ]
-          line [ SVGAttr.X1 "50"
-                 SVGAttr.Y1 "50"
-                 SVGAttr.X2 "250"
-                 SVGAttr.Y2 "50"
-                 SVGAttr.Stroke "#000"
-                 SVGAttr.StrokeWidth "5"
-                 SVGAttr.MarkerEnd "url(#arrow)" ]
-*)
-
 let createMarker markerId color =
     let attr k v =
         SVGAttr.Custom(k, v)
@@ -120,7 +98,7 @@ let toArrow name color { lineStart = { x = x1; y = y1 }
 let toDottedLine { lineStart = { x = x1; y = y1 }
                    lineEnd = { x = x2; y = y2 } } =
    line
-     [ SVGAttr.Stroke "grey"
+     [ SVGAttr.Stroke dottedLineColor
        SVGAttr.StrokeDasharray "2"
        SVGAttr.StrokeWidth "1"
        X1 x1
@@ -231,7 +209,25 @@ let toYAxis mv svgHeight =
                    { lineStart = swap s; lineEnd = swap e })
   |> List.map (mirrorLine mv >> toAxisLine)
 
-let boxLines mv box =
+let boxLinesDotted mv box =
+    let a = box.a
+    let b = box.b
+    let c = box.c
+    let bdotted1 =
+        let ln = { lineStart = mv a
+                   lineEnd = mv (a + b) }
+        toDottedLine ln
+    let cdotted1 =
+        let ln = { lineStart = mv a
+                   lineEnd = mv (a + c) }
+        toDottedLine ln
+    let bdotted2 = toDottedLine { lineStart = mv (a + c)
+                                  lineEnd = mv (a + c + b) }
+    let cdotted2 = toDottedLine { lineStart = mv (a + b)
+                                  lineEnd = mv (a + b + c) }
+    [ bdotted1; cdotted1; bdotted2; cdotted2 ]
+
+let boxLinesArrows mv box =
     let a = box.a
     let b = box.b
     let c = box.c
@@ -253,6 +249,9 @@ let boxLines mv box =
                                  lineEnd = mv (a + b + c) }
     let arrows = aarrow :: barrow :: carrow :: bdotted :: [ cdotted ]
     arrows
+
+let boxLines =
+  if useArrows then boxLinesArrows else boxLinesDotted
 
 let view ((bounds, boxes, shapes) : PictureModel) =
     let (svgWidth, svgHeight) = bounds
