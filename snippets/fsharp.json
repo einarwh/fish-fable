@@ -590,5 +590,47 @@
 			"  else fn >> times (n - 1) fn"
 		],
 		"description": "Insert times function solution"
+	},
+
+	"sideBoxes (solution)": {
+		"prefix": "cheat-sideBoxes",
+		"body": [
+			"let rec sideBoxes n box =",
+			"  if n < 1 then [ box ]",
+			"  else",
+			"    let top, bot = splitVertically 0.5 box",
+			"    let nw, ne = splitHorizontally 0.5 top",
+			"    let sw, se = splitHorizontally 0.5 bot",
+			"    sideBoxes (n - 1) nw @ sideBoxes (n - 1) ne @ [sw; se]"
+		],
+		"description": "Insert sideBoxes function solution"
+	},
+
+	"westSideBoxes (solution)": {
+		"prefix": "cheat-westSideBoxes",
+		"body": [
+		    "let rec westSideBoxes n box =",
+			"  if n < 1 then [ box ]",
+			"  else",
+			"    let top, bot = splitVertically 0.5 box",
+			"    let nw, ne = splitHorizontally 0.5 top",
+			"    let sw, se = splitHorizontally 0.5 bot",
+			"    westSideBoxes (n - 1) nw @ westSideBoxes (n - 1) sw @ [ne; se]"
+		],
+		"description": "Insert westSideBoxes function solution"
+	},
+
+	"cornerBoxes (solution)": {
+		"prefix": "cheat-cornerBoxes",
+		"body": [
+			"let rec cornerBoxes n box =",
+			"  if n < 1 then [ box ]",
+			"  else",
+			"    let top, bot = splitVertically 0.5 box",
+			"    let nw, ne = splitHorizontally 0.5 top",
+			"    let sw, se = splitHorizontally 0.5 bot",
+			"    cornerBoxes (n - 1) nw @ sideBoxes (n - 1) ne @ westSideBoxes (n - 1) sw @ [se]"
+		],
+		"description": "Insert westSideBoxes function solution"
 	}
 }

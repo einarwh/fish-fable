@@ -14,7 +14,9 @@ type Bounds = (int * int)
 type PictureModel = (Bounds * Box list * (Shape * Style) list)
 
 let useArrows = true
+let useDottedLine = true
 let dottedLineColor = "grey"
+let solidLineColor = "red"
 
 let mapper { a = a; b = b; c = c }
            { x = x; y = y } =
@@ -106,6 +108,19 @@ let toDottedLine { lineStart = { x = x1; y = y1 }
        X2 x2
        Y2 y2 ] []
 
+let toSolidLine { lineStart = { x = x1; y = y1 }
+                  lineEnd = { x = x2; y = y2 } } =
+   line
+     [ SVGAttr.Stroke solidLineColor
+       SVGAttr.StrokeWidth "1"
+       X1 x1
+       Y1 y1
+       X2 x2
+       Y2 y2 ] []
+
+let toBoxLine =
+  if useDottedLine then toDottedLine else toSolidLine
+
 let mirrorVector height { x = x; y = y } =
   { x = x; y = height - y }
 
@@ -179,7 +194,6 @@ let toSvgElement (style : Style) = function
       curveElement
     | _ -> failwith "unmatched shape in toSvgElement"
 
-
 let toAxis length =
    let dotPositions = [0 .. 25 .. length]
 
@@ -213,19 +227,19 @@ let boxLinesDotted mv box =
     let a = box.a
     let b = box.b
     let c = box.c
-    let bdotted1 =
+    let bline1 =
         let ln = { lineStart = mv a
                    lineEnd = mv (a + b) }
-        toDottedLine ln
-    let cdotted1 =
+        toBoxLine ln
+    let cline1 =
         let ln = { lineStart = mv a
                    lineEnd = mv (a + c) }
-        toDottedLine ln
-    let bdotted2 = toDottedLine { lineStart = mv (a + c)
-                                  lineEnd = mv (a + c + b) }
-    let cdotted2 = toDottedLine { lineStart = mv (a + b)
-                                  lineEnd = mv (a + b + c) }
-    [ bdotted1; cdotted1; bdotted2; cdotted2 ]
+        toBoxLine ln
+    let bline2 = toBoxLine { lineStart = mv (a + c)
+                             lineEnd = mv (a + c + b) }
+    let cline2 = toBoxLine { lineStart = mv (a + b)
+                             lineEnd = mv (a + b + c) }
+    [ bline1; cline1; bline2; cline2 ]
 
 let boxLinesArrows mv box =
     let a = box.a
