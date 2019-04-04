@@ -14,8 +14,8 @@ let init() : Fish3Model =
 
 let transform (Fish3 p) : ColorPictureModel =
   let bounds = (500, 250)
-  let box = { a = { x = 200.; y = 50. }
-              b = { x = 150.; y = 0. }
+  let box = { a = { x = 50.; y = 50. }
+              b = { x = 450.; y = 0. }
               c = { x = 0.; y = 150. } }
-  let shapes = (box, Whiteish) |> p
+  let shapes = (box, Whiteish) |> row [rehue p; times 2 rehue p ; p ]
   (bounds, Grey, shapes)

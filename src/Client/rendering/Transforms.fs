@@ -13,8 +13,8 @@ type Bounds = (int * int)
 
 type PictureModel = (Bounds * Box list * (Shape * Style) list)
 
-let useArrows = true
-let useDottedLine = true
+let useArrows = false
+let useDottedLine = false
 let dottedLineColor = "grey"
 let solidLineColor = "red"
 

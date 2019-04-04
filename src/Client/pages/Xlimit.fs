@@ -18,5 +18,5 @@ let transform (Fish3 p) : ColorPictureModel =
               b = { x = 400.; y = 0. }
               c = { x = 0.; y = 400. } }
   let lens = (box, Greyish)
-  let shapes = lens |> blank
+  let shapes = lens |> squareLimit 4 p
   (bounds, White, shapes)

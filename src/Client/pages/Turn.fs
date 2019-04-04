@@ -16,5 +16,6 @@ let transform { letter = letter; figure = figure }
   let box = { a = { x = 50.; y = 50. }
               b = { x = 200.; y = 0. }
               c = { x = 0.; y = 200. } }
-  let shapes = box |> letter
-  (bounds, [ box ], shapes)
+              // (times >> times >> times)
+  let shapes = box |> times 3 turn letter
+  (bounds, [ times 3 turnBox box ], shapes)
